@@ -122,5 +122,113 @@ Copia este JSON y pégalo en n8n (Workflow > Import > From JSON) para importar e
     {
       "parameters": {
         "fromEmail": "tu@correo.com",
-        "
+        "toEmail": "{{ $json.body.email }}",
+        "subject": "Respuesta de tu Agente IA",
+        "text": "{{ $node[\"OpenAI\"].json.choices[0].message.content }}"
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [680, 300],
+      "credentials": {
+        "smtp": {
+          "host": "smtp.gmail.com",
+          "port": 465,
+          "secure": true,
+          "user": "tu@correo.com",
+          "password": "TU_CONTRASEÑA_O_APP_PASSWORD"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
 
+Notas:
+
+Reemplaza TU_API_KEY, tu@correo.com, y TU_CONTRASEÑA_O_APP_PASSWORD con tus credenciales.
+Si usas Gmail, genera una App Password en tu cuenta de Google para SMTP.
+
+Infografía: Resumen del Flujo de Trabajo
+┌────────────────────────────────────────────────────────────┐
+│       🧠 Flujo de Trabajo n8n para Agentes IA               │
+└────────────────────────────────────────────────────────────┘
+[Background: Light blue (#E6F0FA), title in white box, font: Montserrat Bold, 20pt]
+
+┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐
+│ 🌐 1. Webhook      │ │ 🤖 2. OpenAI       │ │ 📧 3. Send Email   │
+├────────────────────┤ ├────────────────────┤ ├────────────────────┤
+│ • Método: POST     │ │ • API Key OpenAI   │ │ • SMTP (e.g., Gmail)│
+│ • Path: ai-agent   │ │ • Modelo: gpt-4o-mini │ │ • De: tu@correo.com │
+│ • Recibe pregunta  │ │ • Prompt: {{question}}│ │ • Para: {{email}}  │
+│                    │ │ • Máx. tokens: 150 │ │ • Texto: {{respuesta}}│
+└────────────────────┘ └────────────────────┘ └────────────────────┘
+[Three boxes, side-by-side, white background, blue border (#4A90E2), font: Roboto, 12pt]
+
+┌────────────────────────────────────────────────────────────┐
+│ 🚀 ¡Automatiza Respuestas IA y Envía por Correo! 🎉        │
+└────────────────────────────────────────────────────────────┘
+[Footer: Green background (#2ECC71), white text, font: Montserrat Bold, 14pt]
+
+Instrucciones para Crear la Infografía
+
+Herramienta:
+
+Canva: Crea un diseño de 600x400px.
+PowerPoint: Usa un lienzo de 6x4 pulgadas.
+Illustrator: Configura un lienzo de 600x400px.
+
+
+Pasos:
+
+Fondo: Azul claro (#E6F0FA).
+Título: Caja blanca, texto negro, Montserrat Bold, 20pt.
+Cajas de Nodos:
+3 cajas (180x150px), borde azul (#4A90E2), fondo blanco.
+Texto en Roboto, 12pt, negro (#333333).
+Íconos: Busca “webhook”, “robot”, “email” en Canva o usa emojis (🌐, 🤖, 📧).
+
+
+Pie: Caja verde (#2ECC71), texto blanco, Montserrat Bold, 14pt.
+Espaciado: 15px entre cajas, 20px entre secciones.
+
+
+Exportar:
+
+Canva: Descarga como PNG/PDF.
+PowerPoint: Guarda como PDF.
+Illustrator: Exporta como PNG.
+
+
+
+Notas
+
+Seguridad: Asegúrate de que tu webhook sea accesible (revisa reglas de seguridad en AWS si usas EC2).
+Escalabilidad: Añade nodos para manejar múltiples APIs de IA o destinos (e.g., Slack, Discord).
+Pruebas: Usa un entorno de prueba para evitar costos de API innecesarios.
+Integración con Tutorial Anterior: Este flujo puede ejecutarse en la instancia de n8n configurada en AWS EC2 (t3.micro).
+
+¿Necesitas ayuda para importar el flujo en n8n, configurar las credenciales, o extender el flujo (e.g., añadir más nodos para otras APIs de IA)? También puedo proporcionar una versión del JSON adaptada a otro modelo o destino.
