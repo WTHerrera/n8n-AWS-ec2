@@ -123,7 +123,7 @@ sudo systemctl enable nginx
 ```bash
 sudo nano /etc/nginx/conf.d/n8n.conf
 ```
-Add the following content in `n8n.conf`:
+Añada el siguiente contenido en `n8n.conf`:
 ```nginx
 server {
     listen 80;
