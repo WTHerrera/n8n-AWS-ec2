@@ -14,15 +14,35 @@ ssh -i tuclave.pem ec2-user@<IP-publico>
 ```
 - No te olvides de reemplazar `tuclave` con el nombre del archivo, ej. `n8nclave.pem`, que creaste en EC2 cuando creaste **Par de claves** e `<IP-publico>` por el IP que se gerneró cuando creaste la instancia en EC2, ej. `5.145.30.95`, ej. final `ssh -i n8nclave.pem ec2-user@5.145.30.95`
 
-### Paso 2: Actualizar la instancia e instalar Docker
-- Para actualizar los paquetes de tu sistema, ejecutas:
+### Paso 2: Actualizar la instancia e instalar Docker en Amazon Linux 2023
+- Para actualizar los paquetes de tu sistema, ejecutar:
 ```bash
 sudo yum update -y
 ```
-- Para instalar Docker, ejecutas:
+ó 
+```bash
+sudo dnf update -y
+```
+
+- Instalar los paquetes necesarios para Docker, ejecutar:  
+```bash
+sudo dnf install -y docker
+```
+
+> ⚠️ Si sale algun error❗, corregir de la siguiente manera
+- Instalar los paquetes necesarios para Docker:  
 ```bash
 sudo yum install -y docker
 ```
+
+| Comando | ¿Qué es? | ¿Dónde se usa? |
+|--|--|--|
+| yum | El gestor de paquetes más antiguo | CentOS 7, RHEL 7, Amazon **Linux 2** |
+| dnf | El reemplazo moderno de yum | Fedora, CentOS 8+, RHEL 8+, Amazon **Linux 2023** |
+
+> Como nosotros hemos instalado **Linux 2023** lo correcto debe ser `dnf` 
+
+
 
 ### Paso 3: Iniciar y habilitar el servicio Docker
 - Ejecutas:
@@ -33,20 +53,6 @@ sudo systemctl start docker
 ```bash
 sudo systemctl enable docker
 ```
-> ⚠️ Si sale algun error❗, corregir de la siguiente manera
-- Instalar los paquetes necesarios para Docker:  
-```bash
-sudo dnf install -y docker
-```
-
-
-| Comando | ¿Qué es? | ¿Dónde se usa? |
-|--|--|--|
-| yum | El gestor de paquetes más antiguo | CentOS 7, RHEL 7, Amazon **Linux 2** |
-| dnf | El reemplazo moderno de yum | Fedora, CentOS 8+, RHEL 8+, Amazon **Linux 2023** |
-
-> Como nosotros hemos instalado **Linux 2023** lo correcto es usar `dnf` 
-
 
 ### Paso 4: Añadir usuario al grupo Docker para acceso no root
 ```bash
