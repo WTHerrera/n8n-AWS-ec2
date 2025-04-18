@@ -26,8 +26,7 @@ sudo yum update -y
 sudo dnf install -y docker
 ```
 
-> ⚠️ Si sale algun error❗, corregir de la siguiente manera
-- Instalar los paquetes necesarios para Docker:  
+> ⚠️ Si sale algun error 🚨, corregir usando comando `yum`  
 ```bash
 sudo yum install -y docker
 ```
@@ -38,7 +37,6 @@ sudo yum install -y docker
 | dnf | El reemplazo moderno de yum | Fedora, CentOS 8+, RHEL 8+, Amazon **Linux 2023** |
 
 > Como nosotros hemos instalado **Linux 2023** lo correcto debe ser `dnf` 
-
 
 
 ### Paso 3: Iniciar y habilitar el servicio Docker
