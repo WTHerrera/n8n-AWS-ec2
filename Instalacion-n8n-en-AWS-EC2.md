@@ -2,6 +2,7 @@
 > este procedimiento se actualizpo a partir de => https://github.com/Josh1313/n8n_AWS_installation
 
 ### Paso 0: Creación de una instancia en EC2 en AWS:
+- Seguior el siguiente Tutorial => `Agregar tutorial`
 - Despues de varios pasos debemos tener una instancia creada como: `i-05957bae28513bf8e (n8n-AWS)`
  
 ---
@@ -13,40 +14,40 @@
 ssh -i yourkey.pem ec2-user@publicip
 ```
 
-### Step 2: Update the instance and install Docker
+### Paso 2: Actualizar la instancia e instalar Docker
 ```bash
 sudo yum update -y
 sudo yum install -y docker
 ```
 
-### Step 3: Start and enable Docker service
+### Paso 3: Iniciar y habilitar el servicio Docker
 ```bash
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### Step 4: Add user to the Docker group for non-root access
+### Paso 4: Añadir usuario al grupo Docker para acceso no root
 ```bash
 sudo usermod -aG docker ec2-user
 ```
 
-### Step 5: Exit and log back in so the changes can take effect
+### Paso 5: Salir y volver a iniciar sesión para que los cambios surtan efecto.
 ```bash
 exit
 ```
 
-### Step 6: Connect to AWS EC2 Instance via SSH
+### Paso 6: Conectarse a la instancia AWS EC2 mediante SSH
 ```bash
 ssh -i yourkey.pem ec2-user@publicip
 ```
 
-### Step 7: Install Docker Compose
+### Paso 7: Instalar Docker Compose
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### Step 8: Run N8N Docker Container
+### Paso 8: Ejecutar el contenedor Docker N8N
 ```bash
 sudo docker run -d --restart unless-stopped -it \
 --name n8n \
@@ -58,14 +59,14 @@ sudo docker run -d --restart unless-stopped -it \
 n8nio/n8n
 ```
 
-### Step 9: Install and Configure Nginx
+### Paso 9: Instalar y configurar Nginx
 ```bash
 sudo dnf install -y nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
 
-### Step 10: Configure Nginx for N8N Reverse Proxy
+### Paso 10: Configurar Nginx para N8N Reverse Proxy
 ```bash
 sudo nano /etc/nginx/conf.d/n8n.conf
 ```
@@ -99,13 +100,13 @@ Save and exit using:
 CTRL+O, ENTER, CTRL+X
 ```
 
-### Step 11: Test Nginx Configuration and Restart Service
+### Paso 11: Probar la configuración de Nginx y reiniciar el servicio
 ```bash
 sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-### Step 12: Set Up SSL Certificate with Certbot
+### Paso 12: Configurar certificado SSL con Certbot### Paso 12: Configurar certificado SSL con Certbot
 ```bash
 sudo dnf install -y certbot python3-certbot-nginx
 sudo certbot --nginx -d your-domain-name
