@@ -102,30 +102,24 @@ sudo docker run -d --restart unless-stopped -it \
 n8nio/n8n
 ```
 
+### ✅ Paso 9: Instalar y configurar Nginx
 
-### Paso 8: Ejecutar el contenedor Docker N8N
-> ⚠ Para ejecutar esta parte debes crear un subdominio en algun servidor propio o de terceros, ej. `n8n.tudominio.com`, que apunte a `<IP-Publico>` de EC2, para ello seguir el siguiente tutorial => `Agregar Tutorial`
-
-```bash
-sudo docker run -d --restart unless-stopped -it \
---name n8n \
--p 5678:5678 \
--e N8N_HOST="your-domain-name" \
--e WEBHOOK_TUNNEL_URL="https://your-domain-name/" \
--e WEBHOOK_URL="https://your-domain-name/" \
--v ~/.n8n:/root/.n8n \
-n8nio/n8n
-```
-
-
-### Paso 9: Instalar y configurar Nginx
+#### 🛠 Instalar Nginx
 ```bash
 sudo dnf install -y nginx
+```
+
+#### ▶️ Iniciar el servicio
+```bash
 sudo systemctl start nginx
+```
+
+#### 🔁 Habilitar Nginx para que inicie automáticamente con el sistema
+```bash
 sudo systemctl enable nginx
 ```
 
-### Paso 10: Configurar Nginx para N8N Reverse Proxy
+### ✅ Paso 10: Configurar Nginx para N8N Reverse Proxy
 ```bash
 sudo nano /etc/nginx/conf.d/n8n.conf
 ```
