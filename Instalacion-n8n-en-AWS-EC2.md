@@ -12,7 +12,7 @@
 ```bash
 ssh -i tuclave.pem ec2-user@<IP-publico>
 ```
-- No te olvides de reemplazar `tuclave` con el nombre del archivo `n8nclave.pem` que creaste enEC2 cuando creaste **Par de claves** e `<IP-publico>` por el IP que se gerner´cuando creaste la instancia en EC2, ej. `5.145.30.95`, ej. ssh -i n8nclave.pem ec2-user@5.145.30.95
+- No te olvides de reemplazar `tuclave` con el nombre del archivo, ej. `n8nclave.pem`, que creaste en EC2 cuando creaste **Par de claves** e `<IP-publico>` por el IP que se gerneró cuando creaste la instancia en EC2, ej. `5.145.30.95`, ej. final `ssh -i n8nclave.pem ec2-user@5.145.30.95`
 
 ### Paso 2: Actualizar la instancia e instalar Docker
 - Para actualizar los paquetes de tu sistema:
