@@ -19,10 +19,7 @@ ssh -i tuclave.pem ec2-user@<IP-publico>
 ```bash
 sudo yum update -y
 ```
-ó 
-```bash
-sudo dnf update -y
-```
+ó alternativamente ` sudo dnf update -y `
 
 - Instalar los paquetes necesarios para Docker, ejecutar:  
 ```bash
