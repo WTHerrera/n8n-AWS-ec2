@@ -40,6 +40,10 @@ sudo dnf install -y docker
 ```
 
 Comando | ¿Qué es? | ¿Dónde se usa?
+yum | El gestor de paquetes más antiguo | CentOS 7, RHEL 7, Amazon Linux 2
+dnf | El reemplazo moderno de yum | Fedora, CentOS 8+, RHEL 8+, Amazon Linux 2023
+
+Comando | ¿Qué es? | ¿Dónde se usa?
 yum | El gestor de paquetes más antiguo | CentOS 7, RHEL 7, Amazon **Linux 2**
 dnf | El reemplazo moderno de yum | Fedora, CentOS 8+, RHEL 8+, Amazon **Linux 2023**
 
