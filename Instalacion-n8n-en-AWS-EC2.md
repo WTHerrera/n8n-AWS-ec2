@@ -89,7 +89,7 @@ Aquí tienes una versión mejorada del texto, con mejor redacción, formato más
 > ⚠ **Requisito previo**: Debes tener un **subdominio configurado** (por ejemplo: `n8n.tudominio.com`) que apunte a la **IP pública** de tu instancia EC2.  
 > Puedes usar tu propio dominio o servicios de terceros para ello.  
 > 👉 Consulta el siguiente tutorial para configurar tu subdominio: `Agregar Tutorial`.
-> En caso que no tengas un dominio propio y quieras tener un sub dominio gratuito usar `https://www.noip.com/`  que te creará un subdomion ej. `https://n8nabc.zapto.org/`
+> En caso que no tengas un dominio propio y quieras tener un sub dominio gratuito usar https://www.noip.com/  que te creará un subdomion ej. `https://n8nabc.zapto.org/`
 
 #### Comando para ejecutar N8N en Docker:
 ```bash
