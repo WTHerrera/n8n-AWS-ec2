@@ -1,7 +1,7 @@
 ## 🚀 Configuración de AWS para Docker🐳 y Nginx y certificado 🔒 con Certbot con n8n 🤖
 > este procedimiento se actualizpo a partir de => https://github.com/Josh1313/n8n_AWS_installation
 
-### 🟢 Paso 0: Creación de una instancia en EC2 en AWS:
+### ☑ Paso 0: Creación de una instancia en EC2 en AWS:
 - Seguior el siguiente Tutorial => `Agregar tutorial`
 - Despues de varios pasos debemos tener una instancia creada como: `i-05957bae28513bf8e (n8n-AWS)`
  
@@ -119,42 +119,6 @@ sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
 
-### ✅ Paso 10: Configurar Nginx para N8N Reverse Proxy
-```bash
-sudo nano /etc/nginx/conf.d/n8n.conf
-```
-Añada el siguiente contenido en `n8n.conf`:
-```nginx
-server {
-    listen 80;
-    server_name your-domain-name;
-
-    location / {
-        proxy_pass http://localhost:5678;
-        proxy_http_version 1.1;
-        chunked_transfer_encoding off;
-        proxy_buffering off;
-        proxy_cache off;
-
-        # Headers for WebSocket support
-        proxy_set_header Connection 'Upgrade';
-        proxy_set_header Upgrade $http_upgrade;
-
-        # Additional headers for forwarding client info
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-Save and exit using:
-```bash
-CTRL+O, ENTER, CTRL+X
-```
-
-
-
 ### ✅ Paso 10: Configurar Nginx como Proxy Reverso para n8n
 
 #### 📝 Crear archivo de configuración
@@ -200,16 +164,44 @@ ENTER    # Para confirmar
 CTRL+X   # Para salir del editor
 ```
 
+### ✅ Paso 11: Verificar la configuración de Nginx y reiniciar el servicio
 
-### Paso 11: Probar la configuración de Nginx y reiniciar el servicio
-```bash
-sudo nginx -t
-sudo systemctl restart nginx
-```
+1. **Verifica que la configuración de Nginx esté correcta**:
+   ```bash
+   sudo nginx -t
+   ```
+   > 🎯 Si ves un mensaje como `syntax is ok` y `test is successful`, puedes continuar.
 
-### Paso 12: Configurar certificado SSL con Certbot### Paso 12: Configurar certificado SSL con Certbot
+2. **Reinicia el servicio Nginx para aplicar los cambios**:
+   ```bash
+   sudo systemctl restart nginx
+   ```
+
+> ⚠ **Importante**: Solo reinicia Nginx si la verificación (`nginx -t`) no muestra errores. Si aparece algún problema, revísalo antes de continuar.
+
+
+
+### ✅ Paso 12: Configurar certificado SSL con Certbot (Let's Encrypt)
+
+En este paso instalaremos Certbot, generaremos el certificado SSL para tu dominio y reiniciaremos Nginx.
+
+#### 1. Instala Certbot y su plugin para Nginx:
 ```bash
 sudo dnf install -y certbot python3-certbot-nginx
+```
+
+#### 2. Solicita el certificado SSL para tu dominio:
+```bash
 sudo certbot --nginx -d your-domain-name
+```
+> 📝 Reemplaza `your-domain-name` con tu dominio real, por ejemplo: `n8n.tudominio.com`.
+
+Certbot configurará automáticamente Nginx para usar HTTPS.
+
+#### 3. Reinicia Nginx para aplicar los cambios:
+```bash
 sudo systemctl restart nginx
 ```
+
+> 🎯 **Resultado esperado**: Al finalizar, tu instancia debería estar accesible vía HTTPS desde `https://n8n.tudominio.com`.
+
