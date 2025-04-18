@@ -8,18 +8,18 @@
 ---
 ### Paso 1: Conectarse a la instancia EC2 de AWS mediante SSH
 - Abrir terminal **como administrador**. En Windows  escribir `cmd` en **Buscar** (*esquina inferior iaquierdo, al lado del simbolo de Windows*), luego clik en  `Ejecutar como administrador`.
-- Luego ir a la carpeta donde se descargó el archivo de EC2 (AWS), ej. "`n8npem.pem`", ej. `D:` luego `cd  00 Instalacion-NWN-AWS`, en el terminal deberia vizualisarse algo así `D:\00 Instalacion-N8N-AWS>` y iniciar con la configuración:
-  
+- Luego ir a la carpeta donde se descargó el archivo de EC2 (AWS), ej. "`n8npem.pem`", ej. `D:` luego `cd  00 Instalacion-NWN-AWS`, en el terminal deberia vizualisarse algo así `D:\00 Instalacion-N8N-AWS>` y iniciar con la configuración:  
 ```bash
-ssh -i yourkey.pem ec2-user@publicip
+ssh -i tuclave.pem ec2-user@<IP-publico>
 ```
+- No te olvides de reemplazar `tuclave` con el nombre del archivo `n8nclave.pem` que creaste enEC2 cuando creaste **Par de claves** e `<IP-publico>` por el IP que se gerner´cuando creaste la instancia en EC2, ej. `5.145.30.95`, ej. ssh -i n8nclave.pem ec2-user@5.145.30.95
 
 ### Paso 2: Actualizar la instancia e instalar Docker
 - Para actualizar los paquetes de tu sistema:
 ```bash
 sudo yum update -y
 ```
-> Para instalar Docker:
+- Para instalar Docker:
 ```bash
 sudo yum install -y docker
 ```
