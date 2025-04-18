@@ -15,8 +15,12 @@ ssh -i yourkey.pem ec2-user@publicip
 ```
 
 ### Paso 2: Actualizar la instancia e instalar Docker
+- Para actualizar los paquetes de tu sistema:
 ```bash
 sudo yum update -y
+```
+> Para instalar Docker:
+```bash
 sudo yum install -y docker
 ```
 
