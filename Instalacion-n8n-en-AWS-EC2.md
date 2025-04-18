@@ -1,12 +1,12 @@
 ## 🚀 Configuración de AWS para Docker🐳 y Nginx y certificado 🔒 con Certbot con n8n 🤖
 > este procedimiento se actualizpo a partir de => https://github.com/Josh1313/n8n_AWS_installation
 
-### Paso 0: Creación de una instancia en EC2 en AWS:
+### 🟢 Paso 0: Creación de una instancia en EC2 en AWS:
 - Seguior el siguiente Tutorial => `Agregar tutorial`
 - Despues de varios pasos debemos tener una instancia creada como: `i-05957bae28513bf8e (n8n-AWS)`
  
 ---
-### Paso 1: Conectarse a la instancia EC2 de AWS mediante SSH
+### ✅ Paso 1: Conectarse a la instancia EC2 de AWS mediante SSH
 - Abrir terminal **como administrador**. En Windows  escribir `cmd` en **Buscar** (*esquina inferior izquierdo, al lado del simbolo de Windows*), luego clik en  `Ejecutar como administrador`.
 - Luego ir a la carpeta donde se descargó el archivo de EC2 (AWS), ej. "`n8npem.pem`", ej. `D:` luego `cd  00 Instalacion-NWN-AWS`, en el terminal deberia vizualisarse algo así `D:\00 Instalacion-N8N-AWS>` y iniciar con la configuración:  
 ```bash
@@ -17,7 +17,7 @@ ssh -i tuclave.pem ec2-user@<IP-publico>
 > ⚠ Tips Si tiene problemas con el copiar y pegar enel terminal, si no puedes pegar con **(Ctrl+V)**. Primero copia el tecto codigo con **Ctrl+C**(o como prefieras)  luego vas a la linea correspondiente del terminal y solo debes darle **clik secundario** y con este simple paso se pegará el texto o codigo copiado.
 
 
-### Paso 2: Actualizar la instancia e instalar Docker en Amazon Linux 2023
+### ✅ Paso 2: Actualizar la instancia e instalar Docker en Amazon Linux 2023
 - Para actualizar los paquetes de tu sistema, ejecutar:
 ```bash
 sudo yum update -y
@@ -42,7 +42,7 @@ sudo yum install -y docker
 > Como nosotros hemos instalado **Linux 2023** lo correcto debe ser `dnf` 
 
 
-### Paso 3: Iniciar y habilitar el servicio Docker
+### ✅ Paso 3: Iniciar y habilitar el servicio Docker
 - Ejecutas:
 ```bash
 sudo systemctl start docker
@@ -52,28 +52,60 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### Paso 4: Añadir usuario al grupo Docker para acceso no-root (*non-root access*)
+### ✅ Paso 4: Añadir usuario al grupo Docker para acceso no-root (*non-root access*)
 ```bash
 sudo usermod -aG docker ec2-user
 ```
 
-### Paso 5: Salir y volver a iniciar sesión para que los cambios surtan efecto.
+### ✅ Paso 5: Salir y volver a iniciar sesión para que los cambios surtan efecto.
 ```bash
 exit
 ```
 
-### Paso 6: Conectarse a la instancia AWS EC2 mediante SSH
+### ✅ Paso 6: Conectarse a la instancia AWS EC2 mediante SSH
 ```bash
-ssh -i yourkey.pem ec2-user@publicip
+ssh -i tuclave.pem ec2-user@<IP-publico>
 ```
+> Y debe salir el mensaje: `ec2-user adm wheel systemd-journal docker`
 
-### Paso 7: Instalar Docker Compose
+
+### ✅ Paso 7: Instalar Docker Compose
+7.1.  Corre esta línea para descargar Docker Compose
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+7.2. Corre esta línea para darle permisos de ejecución
+```bash
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
+
+Aquí tienes una versión mejorada del texto, con mejor redacción, formato más claro y sugerencias para facilitar la comprensión:
+
+---
+
+### ✅ Paso 8: Ejecutar el contenedor Docker de N8N
+
+> ⚠ **Requisito previo**: Debes tener un **subdominio configurado** (por ejemplo: `n8n.tudominio.com`) que apunte a la **IP pública** de tu instancia EC2.  
+> Puedes usar tu propio dominio o servicios de terceros para ello.  
+> 👉 Consulta el siguiente tutorial para configurar tu subdominio: `Agregar Tutorial`.
+
+#### Comando para ejecutar N8N en Docker:
+```bash
+sudo docker run -d --restart unless-stopped -it \
+--name n8n \
+-p 5678:5678 \
+-e N8N_HOST="n8n.tudominio.com" \
+-e WEBHOOK_TUNNEL_URL="https://n8n.tudominio.com/" \
+-e WEBHOOK_URL="https://n8n.tudominio.com/" \
+-v ~/.n8n:/root/.n8n \
+n8nio/n8n
+```
+
+
 ### Paso 8: Ejecutar el contenedor Docker N8N
+> ⚠ Para ejecutar esta parte debes crear un subdominio en algun servidor propio o de terceros, ej. `n8n.tudominio.com`, que apunte a `<IP-Publico>` de EC2, para ello seguir el siguiente tutorial => `Agregar Tutorial`
+
 ```bash
 sudo docker run -d --restart unless-stopped -it \
 --name n8n \
@@ -84,6 +116,7 @@ sudo docker run -d --restart unless-stopped -it \
 -v ~/.n8n:/root/.n8n \
 n8nio/n8n
 ```
+
 
 ### Paso 9: Instalar y configurar Nginx
 ```bash
