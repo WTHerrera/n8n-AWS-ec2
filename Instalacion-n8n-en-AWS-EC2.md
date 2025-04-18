@@ -14,7 +14,7 @@ ssh -i tuclave.pem ec2-user@<IP-publico>
 ```
 - No te olvides de reemplazar `tuclave` con el nombre del archivo, ej. `n8nclave.pem`, que creaste en EC2 cuando creaste **Par de claves** e `<IP-publico>` por el IP que se gerneró cuando creaste la instancia en EC2, ej. `5.145.30.95`, ej. final `ssh -i n8nclave.pem ec2-user@5.145.30.95`
 
-> ⚠ Tips Si tiene problemas con el copiar y pegar enel terminal, si no puedes pegar con **(Ctrl+V)**. Primero copia el tecto codigo con **Ctrl+C** ](o como prefieras)  luego vas a la linea correspondiente del terminal y solo debes darle **clik secundario* y con este simple paso se pegará el texto o codigo copiado.
+> ⚠ Tips Si tiene problemas con el copiar y pegar enel terminal, si no puedes pegar con **(Ctrl+V)**. Primero copia el tecto codigo con **Ctrl+C**(o como prefieras)  luego vas a la linea correspondiente del terminal y solo debes darle **clik secundario** y con este simple paso se pegará el texto o codigo copiado.
 
 
 ### Paso 2: Actualizar la instancia e instalar Docker en Amazon Linux 2023
