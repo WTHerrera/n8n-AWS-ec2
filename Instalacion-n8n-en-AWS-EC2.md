@@ -1,9 +1,14 @@
 ## 🚀 Configuración de AWS para Docker🐳 y Nginx y certificado 🔒 con Certbot con n8n 🤖
 > este procedimiento se actualizpo a partir de => https://github.com/Josh1313/n8n_AWS_installation
 
+### Paso 0: Creación de una instancia en EC2 en AWS:
+- Despues de varios pasos debemos tener una instancia creada como:
+- i-05957bae28513bf8e (n8n-AWS)![image](https://github.com/user-attachments/assets/399148ce-8438-43b6-a36b-02b100c010e0)
+ 
+---
 ### Paso 1: Conectarse a la instancia EC2 de AWS mediante SSH
 - Abrir terminal **como administrador**. En Windows  escribir `cmd` en **Buscar** (*esquina inferior iaquierdo, al lado del simbolo de Windows*), luego clik en  `Ejecutar como administrador`.
-- Luego ir a la carpeta donde se descargó el archivo de EC2 (AWS), ej. "`n8npem.pem`", ej. `D:` luego `cd  00 Instalacion-NWN-AWS` y dentro de esta carpeta inciar con la configiuración, deberia vizualisarse algo asi `D:\00 Instalacion-N8N-AWS>`, luego:
+- Luego ir a la carpeta donde se descargó el archivo de EC2 (AWS), ej. "`n8npem.pem`", ej. `D:` luego `cd  00 Instalacion-NWN-AWS`, en el terminal deberia vizualisarse algo así `D:\00 Instalacion-N8N-AWS>` y iniciar con la configuración:
   
 ```bash
 ssh -i yourkey.pem ec2-user@publicip
