@@ -153,6 +153,54 @@ Save and exit using:
 CTRL+O, ENTER, CTRL+X
 ```
 
+
+
+### ✅ Paso 10: Configurar Nginx como Proxy Reverso para n8n
+
+#### 📝 Crear archivo de configuración
+Abre el archivo de configuración de Nginx para n8n:
+```bash
+sudo nano /etc/nginx/conf.d/n8n.conf
+```
+
+#### 📄 Pega el siguiente contenido
+Reemplaza `your-domain-name` por tu dominio real (ej. `n8n.tudominio.com`):
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain-name;
+
+    location / {
+        proxy_pass http://localhost:5678;
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
+
+        # Soporte para WebSocket
+        proxy_set_header Connection 'Upgrade';
+        proxy_set_header Upgrade $http_upgrade;
+
+        # Cabeceras adicionales para reenviar información del cliente
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+#### 💾 Guardar y salir
+Presiona:
+
+```plaintext
+CTRL+O   # Para guardar
+ENTER    # Para confirmar
+CTRL+X   # Para salir del editor
+```
+
+
 ### Paso 11: Probar la configuración de Nginx y reiniciar el servicio
 ```bash
 sudo nginx -t
