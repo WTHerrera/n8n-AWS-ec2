@@ -32,7 +32,7 @@ A continuación, te presento un tutorial paso a paso para desplegar **n8n** en u
 
 2. **Conéctate vía SSH**:
 
-> Sigue los pasos en el **tutorial** => `Agregar tutorial`
+> Sigue los pasos en el **tutorial** => https://github.com/WTHerrera/n8n-en-EC2-AWS--instalacion
 
 
 ---
