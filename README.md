@@ -1,4 +1,4 @@
-#  :abacus: n8n en AWS - EC2 - Como instalar y configurar  - Tutorial en Español :robot:
+#  :abacus: Como configurar una instancia en EC2(AWS) para instalar n8n :robot:
 
 A continuación, te presento un tutorial paso a paso para desplegar **n8n** en una instancia **AWS EC2** usando una máquina elegible para la capa gratuita (t3.micro). Las explicaciones están en español, y el contenido está optimizado para ser claro y conciso.
 
@@ -8,7 +8,7 @@ A continuación, te presento un tutorial paso a paso para desplegar **n8n** en u
 - Un dominio (opcional, para URL personalizada; puedes usar la IP pública de EC2 si no tienes uno).
 
 ---
-## Paso 1: Lanzar una Instancia EC2
+## ✅ Paso 1: Lanzar una Instancia EC2
 1.1. **Inicia Sesión en AWS Console**:
    - Accede al [AWS Management Console](https://aws.amazon.com/console/).
    - Ve a **EC2** > **Instancias** > **Lanzar Instancias**.
@@ -26,173 +26,16 @@ A continuación, te presento un tutorial paso a paso para desplegar **n8n** en u
 1.3. **Lanzar**: Haz clic en **Lanzar Instancia**. Espera a que la instancia esté **en ejecución** (verifica en la página de **Instancias**).
 
 
-## Paso 2: Conectar a tu Instancia EC2
+## ✅ Paso 2: Conectar a tu Instancia EC2
 1. **Obtén la IP Pública**:
    - En la consola de EC2, selecciona tu instancia y anota la **Dirección IPv4 Pública** (e.g., `3.123.456.789`).
 
 2. **Conéctate vía SSH**:
-   - Abre una terminal (o usa PuTTY en Windows).
-   - Ejecuta:
-     ```bash
-     chmod 400 n8n-key.pem
-     ssh -i n8n-key.pem ubuntu@<IP_PÚBLICA>
-     ```
-     Reemplaza `<IP_PÚBLICA>` con la IP de tu instancia.
-   - Confirma la conexión (escribe `yes` si se solicita).
+
+> Sigue los pasos en el **tutorial** => `Agregar tutorial`
 
 
 
-## Paso 3: Instalar Docker
-1. **Actualiza el Sistema**:
-   ```bash
-   sudo apt update && sudo apt upgrade -y
-   ```
-
-2. **Instala Docker**:
-   ```bash
-   sudo apt install docker.io -y
-   sudo systemctl start docker
-   sudo systemctl enable docker
-   sudo usermod -aG docker ubuntu
-   ```
-   - Cierra la sesión y vuelve a conectarte por SSH para aplicar los cambios de grupo.
-
-3. **Verifica Docker**:
-   ```bash
-   docker --version
-   ```
-
-
-## Paso 4: Desplegar n8n con Docker
-1. **Ejecuta el Contenedor de n8n**:
-   ```bash
-   docker run -d --name n8n \
-     -p 5678:5678 \
-     -v n8n_data:/home/node/.n8n \
-     --restart unless-stopped \
-     docker.n8n.io/n8nio/n8n
-   ```
-   - `-d`: Ejecuta en modo desacoplado.
-   - `-p 5678:5678`: Mapea el puerto de n8n.
-   - `-v n8n_data`: Persiste los datos de n8n.
-   - `--restart unless-stopped`: Reinicia automáticamente a menos que lo detengas manualmente.
-
-2. **Verifica n8n**:
-   ```bash
-   docker ps
-   ```
-   - Asegúrate de que el contenedor de n8n esté en ejecución.
-
-3. **Accede a n8n**:
-   - En un navegador, ve a `http://<IP_PÚBLICA>:5678`.
-   - Verás la pantalla de configuración de n8n. Crea un usuario administrador (e.g., correo/contraseña).
-   - **Nota**: Esto usa HTTP y no es seguro para producción; consulta el Paso 6 para SSL.
-
-
-
-## Paso 5: Configurar el Grupo de Seguridad
-1. **Actualiza el Grupo de Seguridad**:
-   - En la consola de AWS, ve a **EC2** > **Grupos de Seguridad** > Selecciona el grupo de tu instancia.
-   - Asegúrate de que las reglas de entrada permitan:
-     - SSH (puerto 22, origen: tu IP o 0.0.0.0/0 para flexibilidad).
-     - HTTP (puerto 80, origen: 0.0.0.0/0).
-     - HTTPS (puerto 443, origen: 0.0.0.0/0).
-     - TCP Personalizado (puerto 5678, origen: 0.0.0.0/0; restrínjelo a tu IP para mayor seguridad).
-
-
-
-## Paso 6: (Opcional) Configurar SSL y Proxy Inverso con Nginx
-Para producción, asegura n8n con HTTPS usando Nginx y Let’s Encrypt.
-
-1. **Instala Nginx**:
-   ```bash
-   sudo apt install nginx -y
-   ```
-
-2. **Instala Certbot** (para Let’s Encrypt):
-   ```bash
-   sudo snap install core; sudo snap refresh core
-   sudo snap install --classic certbot
-   sudo ln -s /snap/bin/certbot /usr/bin/certbot
-   ```
-
-3. **Configura Nginx**:
-   - Crea un archivo de configuración para Nginx:
-     ```bash
-     sudo nano /etc/nginx/sites-available/n8n
-     ```
-   - Agrega:
-     ```nginx
-     server {
-         listen 80;
-         server_name <TU_DOMINIO_O_IP>;
-
-         location / {
-             proxy_pass http://localhost:5678;
-             proxy_set_header Host $host;
-             proxy_set_header X-Real-IP $remote_addr;
-             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-             proxy_set_header X-Forwarded-Proto $scheme;
-         }
-     }
-     ```
-     - Reemplaza `<TU_DOMINIO_O_IP>` con tu dominio (si tienes uno) o la IP pública.
-   - Habilita la configuración:
-     ```bash
-     sudo ln -s /etc/nginx/sites-available/n8n /etc/nginx/sites-enabled/
-     sudo nginx -t
-     sudo systemctl reload nginx
-     ```
-
-4. **Obtén un Certificado SSL**:
-   ```bash
-   sudo certbot --nginx -d <TU_DOMINIO>
-   ```
-   - Sigue las instrucciones para configurar HTTPS. Si usas solo la IP, omite este paso o usa un dominio.
-
-5. **Accede a n8n de Forma Segura**:
-   - Ve a `https://<TU_DOMINIO_O_IP>`. n8n debería cargarse de forma segura.
-
-
-
-## Paso 7: Persistir Datos y Monitorear
-1. **Verifica la Persistencia de Datos**:
-   - Los datos de n8n se almacenan en el volumen `n8n_data`. Verifica:
-     ```bash
-     docker volume inspect n8n_data
-     ```
-
-2. **Monitorea la Instancia**:
-   - Usa AWS CloudWatch (opcional) o `htop` para monitorear CPU/RAM.
-   - Ejecuta `docker logs n8n` para solucionar problemas.
-
-3. **Respalda los Datos**:
-   - Haz copias de seguridad periódicas del directorio `~/.n8n`:
-     ```bash
-     sudo tar -czvf n8n_backup.tar.gz /home/ubuntu/.n8n
-     ```
-
-
-
-## Paso 8: Probar n8n para Agentes de IA
-1. **Crea un Flujo de Trabajo**:
-   - En n8n, crea un nuevo flujo de trabajo.
-   - Agrega nodos como **HTTP Request** o **Code** para integrarte con APIs de IA (e.g., OpenAI, Hugging Face).
-   - Prueba con una automatización simple (e.g., generar texto con IA).
-
-2. **Optimiza**:
-   - Si la CPU/RAM es insuficiente (e.g., para tareas de IA pesadas), actualiza a **t3.small** (~$20/mes) o agrega memoria swap:
-     ```bash
-     sudo fallocate -l 2G /swapfile
-     sudo chmod 600 /swapfile
-     sudo mkswap /swapfile
-     sudo swapon /swapfile
-     echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-     ```
-
-
-
-# Resumen Estilo Infografía (Texto)
 
 ```
 ╔════════════════════════════════════════════════════╗
