@@ -205,4 +205,3 @@ sudo systemctl restart nginx
 ```
 
 > 🎯 **Resultado esperado**: Al finalizar, tu instancia debería estar accesible vía HTTPS desde `https://n8n.tudominio.com`.
-
