@@ -1,10 +1,8 @@
 ## 🚀 Configuración de AWS para Docker🐳 y Nginx y certificado 🔒 con Certbot con n8n 🤖
-> este procedimiento se actualizpo a partir de => https://github.com/Josh1313/n8n_AWS_installation
 
 ### ☑ Paso 0: Creación de una instancia en EC2 en AWS:
-- Seguior el siguiente Tutorial => `Agregar tutorial`
-- Despues de varios pasos debemos tener una instancia creada como: `i-05957bae28513bf8e (n8n-AWS)`
- 
+- Seguir el siguiente **Tutorial** => https://github.com/WTHerrera/n8n-AWS-ec2
+- Despues de varios pasos debemos tener una instancia creada como: `i-05xxxxxx28513xxx (n8n-AWS)` 
 ---
 ### ✅ Paso 1: Conectarse a la instancia EC2 de AWS mediante SSH
 - Abrir terminal **como administrador**. En Windows  escribir `cmd` en **Buscar** (*esquina inferior izquierdo, al lado del simbolo de Windows*), luego clik en  `Ejecutar como administrador`.
@@ -70,7 +68,7 @@ ssh -i tuclave.pem ec2-user@<IP-publico>
 
 
 ### ✅ Paso 7: Instalar Docker Compose
-7.1.  Corre esta línea para descargar Docker Compose
+7.1.  Corre esta línea para descargar *Docker Compose*
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
@@ -79,16 +77,11 @@ sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-
-Aquí tienes una versión mejorada del texto, con mejor redacción, formato más claro y sugerencias para facilitar la comprensión:
-
----
-
 ### ✅ Paso 8: Ejecutar el contenedor Docker de N8N
 
 > ⚠ **Requisito previo**: Debes tener un **subdominio configurado** (por ejemplo: `n8n.tudominio.com`) que apunte a la **IP pública** de tu instancia EC2.  
 > Puedes usar tu propio dominio o servicios de terceros para ello.  
-> 👉 Consulta el siguiente tutorial para configurar tu subdominio: `Agregar Tutorial`.
+> 💬 Consulta el siguiente tutorial para configurar tu subdominio 👉 `Agregar Tutorial`.
 > En caso que no tengas un dominio propio y quieras tener un sub dominio gratuito usar https://www.noip.com/  que te creará un subdomion ej. `https://n8nabc.zapto.org/`
 
 #### Comando para ejecutar N8N en Docker:
@@ -205,3 +198,6 @@ sudo systemctl restart nginx
 ```
 
 > 🎯 **Resultado esperado**: Al finalizar, tu instancia debería estar accesible vía HTTPS desde `https://n8n.tudominio.com`.
+---
+> - Este procedimiento se actualizó a partir de => https://github.com/Josh1313/n8n_AWS_installation
+> - Para seguir un paso a paso visual visitar => https://youtu.be/1pdVcnn7nZ8
